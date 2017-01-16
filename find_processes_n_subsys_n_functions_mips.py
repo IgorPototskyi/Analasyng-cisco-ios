@@ -360,9 +360,10 @@ def rename_functions(strings=None, pattern=None):
 
     for name in names:
         name_str = str(name)
-        if '%' in name_str or '-' in name_str or ' ' in name_str or ':' in name_str or \
-                              '(' in name_str or ')' in name_str or '\n' in name_str or\
-                              '\\' in name_str or '/' in name_str or ',' in name_str:
+        # if '%' in name_str or '-' in name_str or ' ' in name_str or ':' in name_str or \
+        #                       '(' in name_str or ')' in name_str or '\n' in name_str or\
+        #                       '\\' in name_str or '/' in name_str or ',' in name_str:
+        if re.search(r'[\s\W]', name_str) is not None:
             continue
 
         for ref in DataRefsTo(name.ea):
@@ -374,7 +375,7 @@ def rename_functions(strings=None, pattern=None):
 
             if MakeName(func_addr, name_str):
                 counter += 1
-            break
+            # break
 
     print('\n[!!!!!] Renamed {0} functions\n'.format(counter))
 
